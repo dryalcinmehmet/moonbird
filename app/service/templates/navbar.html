@@ -1,0 +1,70 @@
+
+{% block navbar %}
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+  <div class="container-fluid">
+    <a class="navbar-brand text-info" href="/">Moonbird</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active text-muted" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'question' %}">Questions</a>
+        </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Link
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a type="button" href="{% url 'logout' %}" class="btn btn-light text-warning">Sign Out</a></li>
+            <li><a type="button" href="{% url 'login' %}" class="btn btn-light text-warning">Sign In</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a href="{% url 'signup' %}" type="button" class="btn btn-light text-info">Sign Up</a></li>
+          </ul>
+        </li>
+      </ul>
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+  <div class="d-flex flex-row-reverse bd-highlight">
+
+      <ul class="navbar-nav" >
+           <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle"  id="userdrop"  data-bs-toggle="dropdown">
+                        <span class="fas fa-user text-info fa-lg"></span>
+              </a>
+              <style>
+                .dropdown-toggle:after {
+                border: none;
+                }
+
+              </style>
+             <ul class="dropdown-menu m-0 p-0 pull-right">
+                    <li><a href="{% url 'logout' %}" class="list-group-item  list-group-item-secondary list-group-item-action">Sign Out</a></li>
+                    <li><a  href="{% url 'login' %}" class="list-group-item  list-group-item-warning list-group-item-action">Sign In</a></li>
+                    <li><a href="{% url 'signup' %}" class="list-group-item  list-group-item-info list-group-item-action">Sign Up</a></li>
+             </ul>
+
+        </li>
+    </ul>
+
+    </div>
+</nav>
+
+
+{% endblock %}

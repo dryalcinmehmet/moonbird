@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card text-center">
+          <div class="card-header">
+              <span class="badge bg-info">{{ question.title }}</span>
+          </div>
+          <div class="card-body">
+              <div class="card text-center mt-2">
+                  <div class="card-body">
+                      {{question.question}}
+                  </div>
+                  <div class="row justify-content-between">
+                      <div class="col-sm-10">
+
+                      </div>
+                      <div class="col-sm-2" align="right">
+                          <button type="button" class="btn btn-outline-info m-1">Quote</button>
+                      </div>
+                  </div>
+              </div>
+              {% for ans in answers%}
+              <div class="card text-center mt-2">
+                  <div class="card-body">
+                      {{ans.answer}}
+                  </div>
+                  <div class="card-footer text-muted">
+                      <div class="row justify-content-between">
+                          <div class="col-lg-1" style="text-align:left;">
+                              <span class="badge bg-info">{{ans.user}}</span>
+                          </div>
+                          <div class="col-lg-11" style="text-align:right;">
+                              {{ans.date}}
+                          <button type="button" class="btn btn-outline-info m-1" onclick="QuoteDiv( {{ans.id}}, '{{ans.user}}')">Quote</button>
+
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+              {% endfor %}
+          </div>
+          <div class="card-footer text-muted">
+              <div class="row justify-content-between">
+                  <div class="col-lg-1" style="text-align:left;">
+                      <span class="badge bg-info">{{question.user}}</span>
+                  </div>
+                  <div class="col-lg-11" style="text-align:right;">
+                      {{question.date}}
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div id="QuoteDiv" style="display:none;" class="answer_list" ></div>
+
+              <script>
+
+
+function QuoteDiv(answer_id, answer_user) {
+    console.log(answer_id, answer_user);
+    document.getElementById("QuoteDiv").style.display = "";
+
+var token = "{{token}}";
+
+function filterById(jsonObject, id) {return jsonObject.filter(function(jsonObject) {return (jsonObject['id'] == id);})[0];}
+
+console.log(token);
+$.ajax({
+  url: "http://127.0.0.1:8000/api/v1/answers/",
+  type: "GET",
+  headers: {'X-CSRFToken': '{{ csrf_token }}', 'Authorization': "Token " + token },
+    success: function(response){
+            var selectedObject = filterById(response['results'], answer_id);
+            var result_answer = selectedObject['answer'];
+            console.log(response)
+               var elmnt = document.getElementById("QuoteDiv");
+        elmnt.innerHTML = `
+                           <div class="card text-center mt-2">
+                           <div class="card-body">
+
+                               <figure>
+                              <blockquote class="blockquote bg-secondary">
+                                <p class="fst-italic fs-6 text-white">`+ result_answer + `</p>
+                                <p class="fst-italic fs-6 text-warning">`+ answer_user + `</p>
+                              </blockquote>
+                            </figure>
+                            <div class="mb-3">
+                              <label for="quote_answer" class="form-label"><span class="badge">Type Response</span></label>
+                              <textarea class="form-control" id="quote_answer" name="quote_answer" rows="3"></textarea>
+                            </div>
+                           </div>
+                           <div class="card-footer text-muted">
+                               <div class="row justify-content-between">
+                                   <div class="col-lg-1" style="text-align:left;">
+                                       <span class="badge bg-info">{{ans.user}}</span>
+                                   </div>
+                                   <div class="col-lg-11" style="text-align:right;">
+                                       {{ans.date}}
+                                        <button type="submit" class="btn btn-outline-info m-1" ">Send</button>
+                                        <button type="button" class="btn btn-outline-info m-1" onclick="Close()">Cancel</button>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                        `;
+    elmnt.scrollIntoView();
+     }
+});
+
+
+}
+function SendQuote() {
+    document.getElementById("QuoteDiv").style.display = "none";
+
+}
+function Close() {
+    document.getElementById("QuoteDiv").style.display = "none";
+}
+
+</script>
+
+
+{% endblock %}

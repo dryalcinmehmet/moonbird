@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row m-0 p-0">
+    <div class="col-sm-8 m-0 p-0 ">
+        <div class="card text-center">
+          <div class="card-header">
+            <span class="badge bg-secondary">Sharings</span>
+          </div>
+          <div class="card-body">
+
+              {% for q in questions%}
+                  <div class="card text-center mt-2">
+
+                  <div class="card-header" style="text-align:left;">
+                        <a href="{{ q.get_absolute_url }}">{{ q.title }}</a>
+                  </div>
+                  <div class="card-body border-none">
+                      {{q.question}}
+                  </div>
+                  <div class="card-footer text-muted">
+                      <div class="row justify-content-between">
+                          <div class="col-lg-1" style="text-align:left;">
+                              <span class="badge bg-info">{{q.user}}</span>
+                          </div>
+                          <div class="col-lg-11" style="text-align:right;">
+                              {{q.date}}
+
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+              {% endfor %}
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-4 m-0 p-0">
+        <div class="card text-center">
+          <div class="card-body">
+               <div class="card text-center">
+                      Body
+
+                  </div>
+                  </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="card-footer text-muted">
+              {% if is_paginated %}
+                  <ul class="pagination list-inline justify-content-center">
+                    {% if page_obj.has_previous %}
+                      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in paginator.page_range %}
+                      {% if page_obj.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only"></span></span></li>
+                      {% else %}
+                        <li ><a href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+          </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+{% endblock %}
