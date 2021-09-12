@@ -27,7 +27,7 @@ elk:  ## Build elk stack
 elkdown:  ## Build elk stack
 	@echo "[-----------------------------------------]"
 	@echo "ELK Stack building...."
-	docker-compose -f docker-elk/docker-compose.yml down -v
+	docker-compose -f elk/docker-compose.yml down -v
 
 
 .PHONY : dev
