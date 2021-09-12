@@ -21,13 +21,13 @@ airflowdown:  ## Build airflow
 elk:  ## Build elk stack
 	@echo "[-----------------------------------------]"
 	@echo "ELK Stack building...."
-	docker-compose -f docker-elk/docker-compose.yml up --build -d
+	docker-compose -f elk/docker-compose.yml up --build -d
 
 .PHONY : elkdown
 elkdown:  ## Build elk stack
 	@echo "[-----------------------------------------]"
 	@echo "ELK Stack building...."
-	docker-compose -f docker-elk/docker-compose.yml down -v
+	docker-compose -f elk/docker-compose.yml down -v
 
 
 .PHONY : dev
